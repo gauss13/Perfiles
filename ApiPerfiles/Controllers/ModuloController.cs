@@ -2,35 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApiPerfiles.Extensions;
 using ApiPerfiles.Models;
 using ApiPerfiles.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ApiPerfiles.Extensions;
+
 
 namespace ApiPerfiles.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AplicacionController : ControllerBase
+    public class ModuloController : ControllerBase
     {
         public IRepositorioWrapper Repositorio { get; }
-        public AplicacionController(IRepositorioWrapper rep)
+        public ModuloController(IRepositorioWrapper rep)
         {
             Repositorio = rep;
         }
 
+
+        // ->> ACTIONS
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var item = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+            var item = await this.Repositorio.Modulos.GetByIdAsync(id);
 
             if (item == null)
             {
                 var objB = new
                 {
                     ok = false,
-                    mensaje = $"No se encontró la aplicacion con id {id}",
+                    mensaje = $"No se encontró la Modulo con id {id}",
                     errors = ""
                 };
 
@@ -40,14 +44,14 @@ namespace ApiPerfiles.Controllers
             return Ok(new
             {
                 ok = true,
-                Aplicacion = item
+                Modulo = item
             });
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var lista = await this.Repositorio.Aplicaciones.GetAllAsync();
+            var lista = await this.Repositorio.Modulos.GetAllAsync();
 
             // BAD REQUEST
             if (!lista.Any())
@@ -55,7 +59,7 @@ namespace ApiPerfiles.Controllers
                 var objB = new
                 {
                     ok = false,
-                    mensaje = "No se encontrarón aplicaciones",
+                    mensaje = "No se encontrarón Modulos",
                     errors = ""
                 };
                 return BadRequest(objB);
@@ -66,25 +70,25 @@ namespace ApiPerfiles.Controllers
             {
                 ok = true,
                 total = lista.Count(),
-                Aplicaciones = lista
+                Modulos = lista
             };
 
             return Ok(obj);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear([FromBody] Aplicacion item)
+        public async Task<IActionResult> Crear([FromBody] Modulo item)
         {
             try
             {
 
-                var r = await this.Repositorio.Aplicaciones.AddAsync(item);
+                var r = await this.Repositorio.Modulos.AddAsync(item);
                 await this.Repositorio.CompleteAsync();
 
                 var obj = new
                 {
                     ok = true,
-                    Aplicacion = r
+                    Modulo = r
                 };
 
                 return Created("", obj);
@@ -95,7 +99,7 @@ namespace ApiPerfiles.Controllers
                 return BadRequest(new
                 {
                     ok = false,
-                    mensaje = "Se produjo un error al crear la aplicacion",
+                    mensaje = "Se produjo un error al crear la Modulo",
                     errors = new { mensaje = ex.Message }
 
                 });
@@ -106,30 +110,30 @@ namespace ApiPerfiles.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Actualizar([FromBody] Aplicacion itemN, int id)
+        public async Task<IActionResult> Actualizar([FromBody] Modulo itemN, int id)
         {
 
             try
             {
                 itemN.Id = id;
 
-                //buscar la aplicacion 
-                var itemEncontrado = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+                //buscar la Modulo 
+                var itemEncontrado = await this.Repositorio.Modulos.GetByIdAsync(id);
 
                 if (itemEncontrado == null)
                 {
-                    return BadRequest(new { ok = false, mensaje = "No se encontró la aplicacion", erros = "" });
+                    return BadRequest(new { ok = false, mensaje = "No se encontró la Modulo", erros = "" });
                 }
 
                 itemEncontrado.Map(itemN);
 
-                var r = this.Repositorio.Aplicaciones.Update(itemEncontrado);
+                var r = this.Repositorio.Modulos.Update(itemEncontrado);
                 await this.Repositorio.CompleteAsync();
 
                 var obj = new
                 {
                     ok = true,
-                    Aplicacion = itemEncontrado
+                    Modulo = itemEncontrado
                 };
 
                 return Created("", obj);
@@ -141,7 +145,7 @@ namespace ApiPerfiles.Controllers
                 return BadRequest(new
                 {
                     ok = false,
-                    mensaje = "Se produjo un error al Actualizar los datos de la aplicacion",
+                    mensaje = "Se produjo un error al Actualizar los datos de la Modulo",
                     errors = new { mensaje = ex.Message }
 
                 });
@@ -153,29 +157,33 @@ namespace ApiPerfiles.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Eliminar(int id)
         {
-            //buscar la aplicacion 
-            var itemEncontrado = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+            //buscar la Modulo 
+            var itemEncontrado = await this.Repositorio.Modulos.GetByIdAsync(id);
 
             if (itemEncontrado == null)
             {
-                return BadRequest(new { ok = false, mensaje = "No se encontró la aplicacion", erros = "" });
+                return BadRequest(new { ok = false, mensaje = $"No se encontró el Modulo con Id {id}", erros = "" });
             }
 
-            // no se borra fisicamente el registro, solo se cambia de estatus
-            itemEncontrado.Activo = false;
-            var r = this.Repositorio.Aplicaciones.Update(itemEncontrado);
+            // borrado fisico
+          
+            this.Repositorio.Modulos.Remove(itemEncontrado);
             await this.Repositorio.CompleteAsync();
 
             var obj = new
             {
                 ok = true,
-                mensaje = $"Se Desactivo la aplicacion {id}, correctamente",
-                Aplicacion = itemEncontrado
+                mensaje = $"Se Borró el Modulo {id}, correctamente",
+                Modulo = itemEncontrado
             };
 
             return Ok(obj);
 
         }
+
+
+        // <<- ACTIONS
+
 
     }
 }

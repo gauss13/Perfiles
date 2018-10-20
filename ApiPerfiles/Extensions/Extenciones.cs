@@ -16,5 +16,19 @@ namespace ApiPerfiles.Extensions
             itemDb.Img = itemNuevo.Img;
 
         }
+
+        public static void Map(this Role itemDb, Role itemNuevo)
+        {
+            itemDb.Nombre = itemNuevo.Nombre;
+            itemDb.AplicacionId = itemNuevo.AplicacionId;            
+        }
+
+        public static void Map(this Modulo itemDb, Modulo itemNuevo)
+        {
+            itemDb.AplicacionId = itemNuevo.AplicacionId;
+            itemDb.Nombre = itemNuevo.Nombre;
+            itemDb.Acronimo = itemNuevo.Acronimo;
+            
+        }
     }
 }

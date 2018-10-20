@@ -4,14 +4,16 @@ using ApiPerfiles.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApiPerfiles.Migrations
 {
     [DbContext(typeof(PerfilDbContext))]
-    partial class PerfilDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181020150919_segundo")]
+    partial class segundo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,18 +27,15 @@ namespace ApiPerfiles.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Acronimo")
-                        .HasMaxLength(3);
+                    b.Property<string>("Acronimo");
 
                     b.Property<bool>("Activo");
 
                     b.Property<string>("ClaveSeguridad");
 
-                    b.Property<string>("Img")
-                        .HasMaxLength(125);
+                    b.Property<string>("Img");
 
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(20);
+                    b.Property<string>("Nombre");
 
                     b.HasKey("Id");
 
@@ -49,13 +48,11 @@ namespace ApiPerfiles.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Acronimo")
-                        .HasMaxLength(3);
+                    b.Property<string>("Acronimo");
 
                     b.Property<int>("AplicacionId");
 
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(20);
+                    b.Property<string>("Nombre");
 
                     b.HasKey("Id");
 
@@ -70,12 +67,9 @@ namespace ApiPerfiles.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Activo");
-
                     b.Property<int>("AplicacionId");
 
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(20);
+                    b.Property<string>("Nombre");
 
                     b.HasKey("Id");
 
@@ -109,17 +103,13 @@ namespace ApiPerfiles.Migrations
 
                     b.Property<bool>("ActiveDirectory");
 
-                    b.Property<string>("Amaterno")
-                        .HasMaxLength(20);
+                    b.Property<string>("Amaterno");
 
-                    b.Property<string>("Apaterno")
-                        .HasMaxLength(20);
+                    b.Property<string>("Apaterno");
 
-                    b.Property<string>("Correo")
-                        .HasMaxLength(30);
+                    b.Property<string>("Correo");
 
-                    b.Property<string>("Departamento")
-                        .HasMaxLength(30);
+                    b.Property<string>("Departamento");
 
                     b.Property<bool>("Estatus");
 
@@ -131,13 +121,11 @@ namespace ApiPerfiles.Migrations
 
                     b.Property<int>("NSandista");
 
-                    b.Property<string>("Nombres")
-                        .HasMaxLength(20);
+                    b.Property<string>("Nombres");
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(20);
+                    b.Property<string>("UserName");
 
                     b.Property<int>("UsuarioBaja");
 

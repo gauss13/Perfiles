@@ -12,25 +12,29 @@ namespace ApiPerfiles.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AplicacionController : ControllerBase
+    public class RoleController : ControllerBase
     {
         public IRepositorioWrapper Repositorio { get; }
-        public AplicacionController(IRepositorioWrapper rep)
+
+        public RoleController(IRepositorioWrapper rep)
         {
             Repositorio = rep;
         }
 
+
+        // ->> ACTIONS
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var item = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+            var item = await this.Repositorio.Roles.GetByIdAsync(id);
 
             if (item == null)
             {
                 var objB = new
                 {
                     ok = false,
-                    mensaje = $"No se encontró la aplicacion con id {id}",
+                    mensaje = $"No se encontró la Role con id {id}",
                     errors = ""
                 };
 
@@ -40,14 +44,14 @@ namespace ApiPerfiles.Controllers
             return Ok(new
             {
                 ok = true,
-                Aplicacion = item
+                Role = item
             });
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var lista = await this.Repositorio.Aplicaciones.GetAllAsync();
+            var lista = await this.Repositorio.Roles.GetAllAsync();
 
             // BAD REQUEST
             if (!lista.Any())
@@ -55,7 +59,7 @@ namespace ApiPerfiles.Controllers
                 var objB = new
                 {
                     ok = false,
-                    mensaje = "No se encontrarón aplicaciones",
+                    mensaje = "No se encontrarón Roles",
                     errors = ""
                 };
                 return BadRequest(objB);
@@ -66,25 +70,25 @@ namespace ApiPerfiles.Controllers
             {
                 ok = true,
                 total = lista.Count(),
-                Aplicaciones = lista
+                Roles = lista
             };
 
             return Ok(obj);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear([FromBody] Aplicacion item)
+        public async Task<IActionResult> Crear([FromBody] Role item)
         {
             try
             {
 
-                var r = await this.Repositorio.Aplicaciones.AddAsync(item);
+                var r = await this.Repositorio.Roles.AddAsync(item);
                 await this.Repositorio.CompleteAsync();
 
                 var obj = new
                 {
                     ok = true,
-                    Aplicacion = r
+                    Role = r
                 };
 
                 return Created("", obj);
@@ -95,7 +99,7 @@ namespace ApiPerfiles.Controllers
                 return BadRequest(new
                 {
                     ok = false,
-                    mensaje = "Se produjo un error al crear la aplicacion",
+                    mensaje = "Se produjo un error al crear la Role",
                     errors = new { mensaje = ex.Message }
 
                 });
@@ -106,30 +110,30 @@ namespace ApiPerfiles.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Actualizar([FromBody] Aplicacion itemN, int id)
+        public async Task<IActionResult> Actualizar([FromBody] Role itemN, int id)
         {
 
             try
             {
                 itemN.Id = id;
 
-                //buscar la aplicacion 
-                var itemEncontrado = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+                //buscar la Role 
+                var itemEncontrado = await this.Repositorio.Roles.GetByIdAsync(id);
 
                 if (itemEncontrado == null)
                 {
-                    return BadRequest(new { ok = false, mensaje = "No se encontró la aplicacion", erros = "" });
+                    return BadRequest(new { ok = false, mensaje = "No se encontró la Role", erros = "" });
                 }
 
                 itemEncontrado.Map(itemN);
 
-                var r = this.Repositorio.Aplicaciones.Update(itemEncontrado);
+                var r = this.Repositorio.Roles.Update(itemEncontrado);
                 await this.Repositorio.CompleteAsync();
 
                 var obj = new
                 {
                     ok = true,
-                    Aplicacion = itemEncontrado
+                    Role = itemEncontrado
                 };
 
                 return Created("", obj);
@@ -141,7 +145,7 @@ namespace ApiPerfiles.Controllers
                 return BadRequest(new
                 {
                     ok = false,
-                    mensaje = "Se produjo un error al Actualizar los datos de la aplicacion",
+                    mensaje = "Se produjo un error al Actualizar los datos de la Role",
                     errors = new { mensaje = ex.Message }
 
                 });
@@ -153,29 +157,32 @@ namespace ApiPerfiles.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Eliminar(int id)
         {
-            //buscar la aplicacion 
-            var itemEncontrado = await this.Repositorio.Aplicaciones.GetByIdAsync(id);
+            //buscar la Role 
+            var itemEncontrado = await this.Repositorio.Roles.GetByIdAsync(id);
 
             if (itemEncontrado == null)
             {
-                return BadRequest(new { ok = false, mensaje = "No se encontró la aplicacion", erros = "" });
+                return BadRequest(new { ok = false, mensaje = $"No se encontró el Role con Id {id}", erros = "" });
             }
 
             // no se borra fisicamente el registro, solo se cambia de estatus
             itemEncontrado.Activo = false;
-            var r = this.Repositorio.Aplicaciones.Update(itemEncontrado);
+            var r = this.Repositorio.Roles.Update(itemEncontrado);
             await this.Repositorio.CompleteAsync();
 
             var obj = new
             {
                 ok = true,
-                mensaje = $"Se Desactivo la aplicacion {id}, correctamente",
-                Aplicacion = itemEncontrado
+                mensaje = $"Se Desactivo el Role {id}, correctamente",
+                Role = itemEncontrado
             };
 
             return Ok(obj);
 
         }
+
+
+        // <<- ACTIONS
 
     }
 }
