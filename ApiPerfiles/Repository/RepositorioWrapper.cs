@@ -17,6 +17,7 @@ namespace ApiPerfiles.Repository
             Aplicaciones = new RepositorioAplicacion(_Context);
             Roles = new RepositorioRole(_Context);
             Modulos = new RepositorioModulo(_Context);
+            Usuarios = new RepositorioModulo(_Context);
             UsuarioRoles = new RepositorioUsuarioRole(_Context);
             UsuarioModulos = new RepositorioUsuarioModulo(_Context);
             RoleModulosDefault = new RepositorioRoleModuloDefault(_Context);
@@ -25,6 +26,7 @@ namespace ApiPerfiles.Repository
         public IRepositorioAplicacion Aplicaciones { get; private set; }
         public IRepositorioRole Roles { get; private set; }
         public IRepositorioModulo Modulos { get; private set; }
+        public IRepositorioModulo Usuarios { get; private set; }
         public IRepositorioUsuarioRole UsuarioRoles { get; private set; }
         public IRepositorioUsuarioModulo UsuarioModulos { get; private set; }
         public IRepositorioRoleModuloDefault RoleModulosDefault { get; private set; }

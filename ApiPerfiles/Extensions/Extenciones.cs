@@ -30,5 +30,9 @@ namespace ApiPerfiles.Extensions
             itemDb.Acronimo = itemNuevo.Acronimo;
             
         }
+        public static void Map(this Usuario itemDb, Usuario itemNuevo)
+        {
+            itemDb
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace ApiPerfiles.Repository
         IRepositorioAplicacion Aplicaciones { get; }
         IRepositorioRole Roles { get; }
         IRepositorioModulo Modulos { get; }
+        IRepositorioModulo Usuarios { get; }
         IRepositorioUsuarioRole UsuarioRoles { get; }
         IRepositorioUsuarioModulo UsuarioModulos { get; }
         IRepositorioRoleModuloDefault RoleModulosDefault { get; }
