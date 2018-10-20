@@ -32,7 +32,7 @@ namespace ApiPerfiles.Extensions
         }
         public static void Map(this Usuario itemDb, Usuario itemNuevo)
         {
-            itemDb
+          
         }
     }
 }
