@@ -1,0 +1,14 @@
+C:\Proyectos\ApiPerfiles\ApiPerfiles\bin\Debug\netcoreapp2.1\ApiPerfiles.deps.json
+C:\Proyectos\ApiPerfiles\ApiPerfiles\bin\Debug\netcoreapp2.1\ApiPerfiles.runtimeconfig.json
+C:\Proyectos\ApiPerfiles\ApiPerfiles\bin\Debug\netcoreapp2.1\ApiPerfiles.runtimeconfig.dev.json
+C:\Proyectos\ApiPerfiles\ApiPerfiles\bin\Debug\netcoreapp2.1\ApiPerfiles.dll
+C:\Proyectos\ApiPerfiles\ApiPerfiles\bin\Debug\netcoreapp2.1\ApiPerfiles.pdb
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.csprojAssemblyReference.cache
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.csproj.CoreCompileInputs.cache
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.RazorAssemblyInfo.cache
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.RazorAssemblyInfo.cs
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.AssemblyInfoInputs.cache
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.AssemblyInfo.cs
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.RazorTargetAssemblyInfo.cache
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.dll
+C:\Proyectos\ApiPerfiles\ApiPerfiles\obj\Debug\netcoreapp2.1\ApiPerfiles.pdb
