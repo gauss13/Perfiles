@@ -105,6 +105,8 @@ namespace ApiPerfiles.Controllers
                                 UsuarioId = item.UsuarioId,
                                 ModuloId = Int32.Parse(key)
                             };
+
+                            listaUM.Add(itum);
                         }
 
                         if(listaUM.Any())
@@ -135,12 +137,8 @@ namespace ApiPerfiles.Controllers
                     ok = false,
                     mensaje = "Se produjo un error al crear la UsuarioRole",
                     errors = new { mensaje = ex.Message }
-
                 });
-
             }
-
-
         }
             
 
