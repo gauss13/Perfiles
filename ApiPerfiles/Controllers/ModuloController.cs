@@ -20,8 +20,7 @@ namespace ApiPerfiles.Controllers
         {
             Repositorio = rep;
         }
-
-
+        
         // ->> ACTIONS
 
         [HttpGet("{ida}/{idm}")]
@@ -75,6 +74,38 @@ namespace ApiPerfiles.Controllers
 
             return Ok(obj);
         }
+
+        //Validar acceso al modulo
+        [HttpGet("{ida}/{idm}/{idu}")]
+        public async Task<IActionResult> ValidarAcceso(int ida, int idm, int idu)
+        {
+            var item = await this.Repositorio.Modulos.FindAsync(x => x.AplicacionId == ida && x.Id == idm);
+
+            if (!item.Any())
+            {
+                return BadRequest(new
+                {
+                    ok = false,
+                    mensaje = $"El modulo {idm} no se encuentra en la aplicacion {ida}"
+                });
+            }
+
+            var itemUm = await this.Repositorio.UsuarioModulos.FindAsync(x => x.ModuloId == idm && x.UsuarioId == idu);
+
+            if (!itemUm.Any())
+            {
+                return BadRequest(new
+                {
+                    ok = false,
+                    mensaje = $"El modulo no esta asignado al usuario {idu}"
+                });
+            }
+
+            return Ok(new { ok = true });
+
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Crear([FromBody] Modulo item)
@@ -183,37 +214,6 @@ namespace ApiPerfiles.Controllers
         
         // <<- ACTIONS
 
-        //Validar
-        [HttpGet("{ida}/{idm}/{idu}")]
-        public async Task<IActionResult> ValidarAcceso(int ida, int idm, int idu)
-        {
-            var item = await this.Repositorio.Modulos.FindAsync(x => x.AplicacionId == ida && x.Id == idm);
-
-            if(item == null)
-            {
-                return BadRequest(new {
-                    ok =false,
-                    mensaje= $"El modulo no se encuentra en la aplicacion {ida}"
-                });
-            }
-
-            var itemUm = this.Repositorio.UsuarioModulos.FindAsync(x => x.ModuloId == idm && x.UsuarioId == idu);
-
-            if(itemUm == null)
-            {
-                return BadRequest(new
-                {
-                    ok = false,
-                    mensaje = $"El modulo no esta asignado al usuario {idu}"
-                });
-            }
-
-
-            return Ok(new { ok=true });
-
-
-        }
-
-
+       
     }
 }
