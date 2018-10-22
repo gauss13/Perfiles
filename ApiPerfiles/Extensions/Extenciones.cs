@@ -12,7 +12,7 @@ namespace ApiPerfiles.Extensions
         {
             itemDb.Nombre = itemNuevo.Nombre;
             itemDb.Acronimo = itemNuevo.Acronimo;
-            itemDb.ClaveSeguridad = itemNuevo.ClaveSeguridad;
+            //itemDb.ClaveSeguridad = itemNuevo.ClaveSeguridad;
             itemDb.Img = itemNuevo.Img;
 
         }

@@ -199,8 +199,7 @@ namespace ApiPerfiles.Controllers
             return Ok(obj);
 
         }
-
-
+        
         [HttpPost("[action]/{id:int}")]
         public async Task<IActionResult> ActualizarPassword([FromBody] PasswordVM vmodel, int id)
         {
@@ -246,6 +245,10 @@ namespace ApiPerfiles.Controllers
 
 
         // <<- ACTIONS
+
+
+    
+
 
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApiPerfiles.Extensions;
 using ApiPerfiles.Models;
 using ApiPerfiles.Repository;
+using CryptoHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,6 +78,9 @@ namespace ApiPerfiles.Controllers
         {
             try
             {
+
+                var hashPass = Crypto.HashPassword(item.ClaveSeguridad);
+                item.ClaveSeguridad = hashPass;
 
                 var r = await this.Repositorio.Aplicaciones.AddAsync(item);
                 await this.Repositorio.CompleteAsync();

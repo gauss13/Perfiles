@@ -85,6 +85,40 @@ namespace ApiPerfiles.Controllers
                 var r = await this.Repositorio.UsuarioRoles.AddAsync(item);
                 await this.Repositorio.CompleteAsync();
 
+                #region ASIGNAR MODULOS DEFAULT
+
+             
+                //Asignar los modulos default del role
+                var listaModulos = await this.Repositorio.RoleModulosDefault.FindAsync(x => x.RoleId == item.RoleId);
+
+                if(listaModulos.Any())
+                {
+                    var arrayMod = listaModulos.FirstOrDefault().Modulos.Split(',');
+
+                    if (arrayMod.Length > 0)
+                    {
+                        List<UsuarioModulo> listaUM = new List<UsuarioModulo>();
+                        foreach (var key in arrayMod)
+                        {
+                            UsuarioModulo itum = new UsuarioModulo()
+                            {
+                                UsuarioId = item.UsuarioId,
+                                ModuloId = Int32.Parse(key)
+                            };
+                        }
+
+                        if(listaUM.Any())
+                        {
+                           await this.Repositorio.UsuarioModulos.AddRangeAsync(listaUM);
+                            await this.Repositorio.CompleteAsync();
+                        }
+
+                    }
+                }
+
+                #endregion
+
+
                 var obj = new
                 {
                     ok = true,
@@ -124,8 +158,41 @@ namespace ApiPerfiles.Controllers
             // borrado fisico
 
             this.Repositorio.UsuarioRoles.RemoveRange(itemEncontrado);
-
             await this.Repositorio.CompleteAsync();
+
+
+            #region REMUEVE MODULOS DEFAULT
+
+            //Asignar los modulos default del role
+            var listaModulos = await this.Repositorio.RoleModulosDefault.FindAsync(x => x.RoleId == itemN.RoleId);
+
+            if (listaModulos.Any())
+            {
+                var arrayMod = listaModulos.FirstOrDefault().Modulos.Split(',');
+
+                if (arrayMod.Length > 0)
+                {
+                    List<UsuarioModulo> listaUM = new List<UsuarioModulo>();
+                    foreach (var key in arrayMod)
+                    {
+                        UsuarioModulo itum = new UsuarioModulo()
+                        {
+                            UsuarioId = itemN.UsuarioId,
+                            ModuloId = Int32.Parse(key)
+                        };
+                    }
+
+                    if (listaUM.Any())
+                    {
+                         this.Repositorio.UsuarioModulos.RemoveRange(listaUM);
+                        await this.Repositorio.CompleteAsync();
+                    }
+
+                }
+            }
+            #endregion
+
+
 
             var obj = new
             {
