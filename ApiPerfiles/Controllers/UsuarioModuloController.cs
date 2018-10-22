@@ -22,17 +22,21 @@ namespace ApiPerfiles.Controllers
 
         // ->> ACTIONS
 
-        [HttpGet("{idu}")]
-        public async Task<IActionResult> GetByIdUsuario(int idu)
+        [HttpGet("{idu}/{ida}")]
+        public async Task<IActionResult> GetByIdUsuario(int idu,int ida)
         {
-            var item = await this.Repositorio.UsuarioModulos.FindAsync(x => x.UsuarioId == idu);
+            // var lista = await this.Repositorio.UsuarioModulos.FindAsync(x => x.UsuarioId == idu && x.i);
 
-            if (!item.Any())
+            var lista =  this.Repositorio.UsuarioModulos.GetModuloByUsuario(idu, ida);
+
+            var arrayMod = lista.Select(x => new { x.ModuloId, x.Accion, x.Modulo.Nombre, x.Modulo.Acronimo }).ToList();
+
+            if (!lista.Any())
             {
                 var objB = new
                 {
                     ok = false,
-                    mensaje = $"No se encontró UsuarioModulos para el usuario con id {idu}",
+                    mensaje = $"No se encontró Modulos para el usuario con id {idu}",
                     errors = ""
                 };
 
@@ -42,7 +46,7 @@ namespace ApiPerfiles.Controllers
             return Ok(new
             {
                 ok = true,
-                UsuarioModulo = item
+                UsuarioModulo = arrayMod
             });
         }
 

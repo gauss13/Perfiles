@@ -151,6 +151,14 @@ namespace ApiPerfiles.Repository
         {
             get { return Context as PerfilDbContext; }
         }
+
+        public IEnumerable<UsuarioModulo> GetModuloByUsuario(int idu, int ida)
+        {            
+            var lista = appDbContext.UsuarioModulos.Include(x => x.Modulo).Where(x => x.UsuarioId == idu).ToList();
+            var lista2 = lista.Where(m => m.Modulo.AplicacionId == ida).ToList();
+
+            return lista2;
+        }
     }
 
     public class RepositorioRoleModuloDefault : RepositorioBase<RoleModuloDefault>, IRepositorioRoleModuloDefault

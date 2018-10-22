@@ -6,6 +6,7 @@ using ApiPerfiles.Models;
 using ApiPerfiles.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ApiPerfiles.Extensions;
 
 namespace ApiPerfiles.Controllers
 {
@@ -71,8 +72,20 @@ namespace ApiPerfiles.Controllers
                 if(ra == null)
                 {
                     return BadRequest(new { ok = false, mensaje = $"Su usuario no tiene acceso a la aplicacion." });
-                }             
+                }
 
+
+          
+
+                Usuario objU = new Usuario();
+                objU.Map(usuarioDb);
+
+                objU.Password = ":)";
+
+                Role objR = new Role();
+                objR.Map(ra.Role);
+
+                return Ok(new { ok = true, usuario = objU, role = objR });
 
             }
             catch (Exception ex)
@@ -82,8 +95,7 @@ namespace ApiPerfiles.Controllers
             }
 
 
-            usuarioDb.Password = ":)";
-            return Ok (new { ok = true, usuario = usuarioDb });
+          
 
         }
 

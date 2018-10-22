@@ -50,6 +50,8 @@ namespace ApiPerfiles.Repository
 
     public interface IRepositorioUsuarioModulo : IRepositorioBase<UsuarioModulo>
     {
+        IEnumerable<UsuarioModulo> GetModuloByUsuario(int idu, int ida);
+
     }
 
     public interface IRepositorioRoleModuloDefault : IRepositorioBase<RoleModuloDefault>
