@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -63,12 +64,15 @@ namespace ApiPerfiles.Models
         public int NSandista { get; set; }
         public bool ActiveDirectory { get; set; }
         public bool Estatus { get; set; }
+        [Column(TypeName = "DateTime")]
         public DateTime FechaReg { get; set; }
         public int UsuarioReg { get; set; }
-        public DateTime FechaMod { get; set; }
-        public int UsuarioMod { get; set; }
-        public DateTime FechaBaja { get; set; }
-        public int UsuarioBaja { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime? FechaMod { get; set; }
+        public int? UsuarioMod { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime? FechaBaja { get; set; }
+        public int? UsuarioBaja { get; set; }
         public List<UsuarioRole> UsuarioRoles  { get; set; }
         public List<UsuarioModulo> UsuarioModulos { get; set; }
 

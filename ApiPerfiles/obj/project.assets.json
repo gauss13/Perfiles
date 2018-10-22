@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "CryptoHelper/3.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/CryptoHelper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CryptoHelper.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4619,6 +4631,17 @@
     }
   },
   "libraries": {
+    "CryptoHelper/3.0.2": {
+      "sha512": "6xFZdEnhuOmX58TgZAeb20MbddsL8/nR/4CnWhmjMXv9gfpOxD+1bBU7IDtYq2Q8rZJUT6xYWdhW16bKriU2Mw==",
+      "type": "package",
+      "path": "cryptohelper/3.0.2",
+      "files": [
+        "cryptohelper.3.0.2.nupkg.sha512",
+        "cryptohelper.nuspec",
+        "lib/netstandard2.0/CryptoHelper.dll",
+        "lib/netstandard2.0/CryptoHelper.xml"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
       "type": "package",
@@ -12212,6 +12235,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "CryptoHelper >= 3.0.2",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.EntityFrameworkCore >= 2.1.4",
@@ -12262,6 +12286,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "CryptoHelper": {
+            "target": "Package",
+            "version": "[3.0.2, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

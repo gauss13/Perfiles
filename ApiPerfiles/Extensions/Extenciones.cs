@@ -32,7 +32,23 @@ namespace ApiPerfiles.Extensions
         }
         public static void Map(this Usuario itemDb, Usuario itemNuevo)
         {
-          
+            itemDb.UserName = itemNuevo.UserName;     
+            //No se pasará el password
+
+            itemDb.Nombres = itemNuevo.Nombres;
+            itemDb.Apaterno = itemNuevo.Apaterno;
+            itemDb.Amaterno = itemNuevo.Amaterno;
+            itemDb.Correo = itemNuevo.Correo;
+            itemDb.Departamento = itemNuevo.Departamento;
+            itemDb.NSandista = itemNuevo.NSandista;
+            itemDb.ActiveDirectory = itemNuevo.ActiveDirectory;
+            itemDb.Estatus = itemNuevo.Estatus;
+            //itemDb.FechaReg = itemNuevo.FechaReg;
+            //itemDb.UsuarioReg = itemNuevo.UsuarioReg;
+            //itemDb.FechaMod = itemNuevo.FechaMod;
+            //itemDb.UsuarioMod = itemNuevo.UsuarioMod;
+            //itemDb.FechaBaja = itemNuevo.FechaBaja;
+            //itemDb.UsuarioBaja = itemNuevo.UsuarioBaja;
         }
     }
 }

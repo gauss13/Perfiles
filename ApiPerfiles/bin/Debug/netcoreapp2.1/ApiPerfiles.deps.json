@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "2fe6886070a5e9d1321cc79b6ee2bb956ff65421"
+    "signature": "9795b9daf592e693e9ce585fa2dc292781e39294"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.1": {
       "ApiPerfiles/1.0.0": {
         "dependencies": {
+          "CryptoHelper": "3.0.2",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.EntityFrameworkCore": "2.1.4",
@@ -37,6 +38,20 @@
         },
         "compile": {
           "ApiPerfiles.dll": {}
+        }
+      },
+      "CryptoHelper/3.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/CryptoHelper.dll": {
+            "assemblyVersion": "3.0.2.0",
+            "fileVersion": "3.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/CryptoHelper.dll": {}
         }
       },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
@@ -3500,6 +3515,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "CryptoHelper/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6xFZdEnhuOmX58TgZAeb20MbddsL8/nR/4CnWhmjMXv9gfpOxD+1bBU7IDtYq2Q8rZJUT6xYWdhW16bKriU2Mw==",
+      "path": "cryptohelper/3.0.2",
+      "hashPath": "cryptohelper.3.0.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",

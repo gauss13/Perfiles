@@ -6,6 +6,9 @@ using ApiPerfiles.Models;
 using ApiPerfiles.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ApiPerfiles.Extensions;
+using CryptoHelper;
+using ApiPerfiles.ViewModel;
 
 namespace ApiPerfiles.Controllers
 {
@@ -27,6 +30,8 @@ namespace ApiPerfiles.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await this.Repositorio.Usuarios.GetByIdAsync(id);
+
+            item.Password = ":)";
 
             if (item == null)
             {
@@ -51,6 +56,11 @@ namespace ApiPerfiles.Controllers
         public async Task<IActionResult> GetAll()
         {
             var lista = await this.Repositorio.Usuarios.GetAllAsync();
+
+            foreach (var item in lista)
+            {
+                item.Password = ":)";
+            }
 
             // BAD REQUEST
             if (!lista.Any())
@@ -80,9 +90,15 @@ namespace ApiPerfiles.Controllers
         {
             try
             {
+                item.FechaReg = DateTime.Now;
+
+                var hashPass = Crypto.HashPassword(item.Password);
+                item.Password = hashPass;
 
                 var r = await this.Repositorio.Usuarios.AddAsync(item);
                 await this.Repositorio.CompleteAsync();
+
+                r.Password = ":)";
 
                 var obj = new
                 {
@@ -126,9 +142,11 @@ namespace ApiPerfiles.Controllers
 
                 itemEncontrado.Map(itemN);
 
+                itemEncontrado.FechaMod = DateTime.Now;
                 var r = this.Repositorio.Usuarios.Update(itemEncontrado);
                 await this.Repositorio.CompleteAsync();
 
+                itemEncontrado.Password = ":)";
                 var obj = new
                 {
                     ok = true,
@@ -165,7 +183,9 @@ namespace ApiPerfiles.Controllers
             }
 
             // no se borra fisicamente el registro, solo se cambia de estatus
-            itemEncontrado.Activo = false;
+            itemEncontrado.Estatus = false;
+            itemEncontrado.FechaBaja = DateTime.Now;
+
             var r = this.Repositorio.Usuarios.Update(itemEncontrado);
             await this.Repositorio.CompleteAsync();
 
@@ -177,6 +197,50 @@ namespace ApiPerfiles.Controllers
             };
 
             return Ok(obj);
+
+        }
+
+
+        [HttpPost("[action]/{id:int}")]
+        public async Task<IActionResult> ActualizarPassword([FromBody] PasswordVM vmodel, int id)
+        {
+            // validar password vacios
+            if (vmodel.PasswordActual.Trim() == string.Empty || vmodel.PasswordNuevo.Trim() == string.Empty)
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, new { ok = false, mensaje = "No debe enviar password vacios" });
+            }
+
+            // Es el mismo password ?
+            if (vmodel.PasswordActual.Trim() == vmodel.PasswordNuevo.Trim())
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, new { ok = false, mensaje = "Los password son iguales" });
+            }
+
+
+            //buscar la Usuario 
+            var itemEncontrado = await this.Repositorio.Usuarios.GetByIdAsync(id);
+
+
+            // Verfivar password actual
+            var valid = Crypto.VerifyHashedPassword(itemEncontrado.Password, vmodel.PasswordActual.Trim());
+
+            if (!valid)
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, new { ok = false, mensaje = "El password actual no es correcto." });
+            }
+
+
+            //Hacer el cambio de password
+            var hashNuevoPassword = Crypto.HashPassword(vmodel.PasswordNuevo);
+
+            //Actualizar en BD
+            itemEncontrado.FechaMod = DateTime.Now;
+            itemEncontrado.Password = hashNuevoPassword;
+            var r = this.Repositorio.Usuarios.Update(itemEncontrado);
+            await this.Repositorio.CompleteAsync();
+
+            return Ok(new { ok = true, mensaje = "El password se cambio correctamente." });
+
 
         }
 
