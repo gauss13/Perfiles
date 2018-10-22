@@ -24,17 +24,17 @@ namespace ApiPerfiles.Controllers
 
         // ->> ACTIONS
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{ida}/{idm}")]
+        public async Task<IActionResult> GetById(int ida, int idm)
         {
-            var item = await this.Repositorio.Modulos.GetByIdAsync(id);
+            var item = await this.Repositorio.Modulos.FindAsync(x => x.AplicacionId == ida && x.Id == idm);
 
             if (item == null)
             {
                 var objB = new
                 {
                     ok = false,
-                    mensaje = $"No se encontró la Modulo con id {id}",
+                    mensaje = $"No se encontró la Modulo con id {idm}",
                     errors = ""
                 };
 
@@ -48,10 +48,10 @@ namespace ApiPerfiles.Controllers
             });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("{ida}")]
+        public async Task<IActionResult> GetAll(int ida)
         {
-            var lista = await this.Repositorio.Modulos.GetAllAsync();
+            var lista = await this.Repositorio.Modulos.FindAsync(x=> x.AplicacionId == ida);
 
             // BAD REQUEST
             if (!lista.Any())
@@ -180,9 +180,39 @@ namespace ApiPerfiles.Controllers
             return Ok(obj);
 
         }
-
-
+        
         // <<- ACTIONS
+
+        //Validar
+        [HttpGet("{ida}/{idm}/{idu}")]
+        public async Task<IActionResult> ValidarAcceso(int ida, int idm, int idu)
+        {
+            var item = await this.Repositorio.Modulos.FindAsync(x => x.AplicacionId == ida && x.Id == idm);
+
+            if(item == null)
+            {
+                return BadRequest(new {
+                    ok =false,
+                    mensaje= $"El modulo no se encuentra en la aplicacion {ida}"
+                });
+            }
+
+            var itemUm = this.Repositorio.UsuarioModulos.FindAsync(x => x.ModuloId == idm && x.UsuarioId == idu);
+
+            if(itemUm == null)
+            {
+                return BadRequest(new
+                {
+                    ok = false,
+                    mensaje = $"El modulo no esta asignado al usuario {idu}"
+                });
+            }
+
+
+            return Ok(new { ok=true });
+
+
+        }
 
 
     }
