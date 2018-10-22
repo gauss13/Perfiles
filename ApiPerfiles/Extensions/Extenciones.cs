@@ -50,5 +50,18 @@ namespace ApiPerfiles.Extensions
             //itemDb.FechaBaja = itemNuevo.FechaBaja;
             //itemDb.UsuarioBaja = itemNuevo.UsuarioBaja;
         }
+
+        public static void Map(this UsuarioRole itemDb, UsuarioRole itemNuevo)
+        {
+            itemDb.UsuarioId = itemNuevo.UsuarioId;
+            itemDb.RoleId = itemNuevo.RoleId;
+        }
+
+        public static void Map(this RoleModuloDefault itemDb, RoleModuloDefault itemNuevo)
+        {
+            itemDb.RoleId = itemNuevo.RoleId;
+            itemDb.Modulos = itemNuevo.Modulos;
+
+        }
     }
 }

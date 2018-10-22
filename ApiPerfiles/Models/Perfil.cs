@@ -91,6 +91,7 @@ namespace ApiPerfiles.Models
     {
         public int UsuarioId { get; set; }
         public int ModuloId { get; set; }
+        [StringLength(8)]
         public string Accion { get; set; }
         public Usuario Usuario { get; set; } // nav
         public Modulo Modulo { get; set; } // nav
