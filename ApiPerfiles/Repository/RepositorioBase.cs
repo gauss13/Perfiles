@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApiPerfiles.Repository
 {
-    public class RepositorioBase<T> : IRepositorioBase<T> where T: class
+    public class RepositorioBase<T> : IRepositorioBase<T> where T : class
     {
         protected readonly DbContext Context;
         private DbSet<T> _entities;
@@ -116,6 +116,8 @@ namespace ApiPerfiles.Repository
         {
             get { return Context as PerfilDbContext; }
         }
+
+      
     }
 
 
@@ -128,6 +130,13 @@ namespace ApiPerfiles.Repository
         public PerfilDbContext appDbContext
         {
             get { return Context as PerfilDbContext; }
+        }
+
+        public IEnumerable<UsuarioRole> GetUsuarioRoleConRoles(int id)
+        {
+            return appDbContext.UsuarioRoles.Where(x => x.UsuarioId == id).Include(x => x.Role)
+                   .DefaultIfEmpty(new UsuarioRole())
+                   .ToList();
         }
     }
 

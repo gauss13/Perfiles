@@ -39,10 +39,12 @@ namespace ApiPerfiles.Repository
 
     public interface IRepositorioUsuario : IRepositorioBase<Usuario>
     {
+      
     }
 
     public interface IRepositorioUsuarioRole : IRepositorioBase<UsuarioRole>
     {
+        IEnumerable<UsuarioRole> GetUsuarioRoleConRoles(int id);
     }
 
 

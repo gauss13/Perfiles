@@ -90,6 +90,20 @@ namespace ApiPerfiles.Controllers
         {
             try
             {
+                //Validar que el nombre de usuario no exista en la BD
+                var ue = await this.Repositorio.Usuarios.FindAsync(x => x.UserName == item.UserName);
+
+                if(ue != null)
+                {
+                    return BadRequest(new
+                    {
+                        ok = false,
+                        mensaje ="El nombre de usuario ya esta registrado"
+                    });
+                }
+
+
+
                 item.FechaReg = DateTime.Now;
 
                 var hashPass = Crypto.HashPassword(item.Password);

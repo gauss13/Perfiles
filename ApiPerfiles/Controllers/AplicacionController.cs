@@ -181,5 +181,12 @@ namespace ApiPerfiles.Controllers
 
         }
 
+        [HttpPost("valid/{ida:int}/{idu:int}")]
+        public IActionResult Validar(int ida, int idu)
+        {
+            //buscar los roles del usuario
+            return Ok();
+
+        }
     }
 }
