@@ -1,0 +1,6 @@
+
+.vs/
+ApiPerfiles/obj
+ApiPerfiles/bin
+
+ApiPerfiles/ClientApp/node_modules
