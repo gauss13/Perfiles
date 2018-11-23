@@ -53,7 +53,7 @@ namespace ApiPerfiles
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            //app.UseHttpsRedirection(); //https
             app.UseMvc();
         }
     }
